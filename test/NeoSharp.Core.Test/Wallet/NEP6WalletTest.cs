@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NeoSharp.Core.Cryptography;
+using NeoSharp.Core.Models;
 using NeoSharp.Core.Types;
 using NeoSharp.Core.Wallet.Helpers;
 using NeoSharp.Core.Wallet.NEP6;
@@ -33,6 +34,8 @@ namespace NeoSharp.Core.Wallet.Test
             _crypto = AutoMockContainer.Create<BouncyCastleCrypto>();
             _walletManager = new Nep6WalletManager(_crypto);
             _walletManager.CreateWallet(TestWalletFile);
+
+            _walletHelper = new WalletHelper(_crypto);
         }
 
         [TestCleanup]
@@ -92,7 +95,7 @@ namespace NeoSharp.Core.Wallet.Test
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 1);
 
-            _walletManager.DeleteAccount(walletAccount.ScriptHash);
+            _walletManager.DeleteAccount(walletAccount.Contract.ScriptHash);
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 0);
         }
@@ -183,7 +186,8 @@ namespace NeoSharp.Core.Wallet.Test
             // Asset
             Assert.IsNotNull(walletAccount);
 
-            Assert.IsTrue(walletAccount.Address.Equals("AdYJeaHepN3jmdUduBLWPESqwQ9QYQCFi7"));
+            String address = _walletHelper.ScriptHashToAddress(walletAccount.Contract.ScriptHash);
+            Assert.IsTrue(address.Equals("AdYJeaHepN3jmdUduBLWPESqwQ9QYQCFi7"));
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 1);
         }
@@ -213,12 +217,16 @@ namespace NeoSharp.Core.Wallet.Test
         public void TestImportScriptHashEmpty()
         {
             // Act
-            IWalletAccount walletAccount1 = new NEP6Account(_crypto)
+            IWalletAccount walletAccount1 = new NEP6Account()
             {
-                ScriptHash = new UInt160()
+                Contract =  new Contract () { 
+                    Code = new Code { 
+                        ScriptHash = UInt160.Zero
+                    }
+                }
             };
 
-            _walletManager.Import(walletAccount1.ScriptHash);
+            _walletManager.Import(walletAccount1.Contract.ScriptHash);
         }
 
         [TestMethod]

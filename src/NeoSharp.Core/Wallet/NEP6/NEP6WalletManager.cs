@@ -27,6 +27,7 @@ namespace NeoSharp.Core.Wallet.NEP6
         {
             _crypto = crypto;
             _walletHelper = new WalletHelper(_crypto);
+            _contractHelper = new ContractHelper();
         }
 
         /// <summary>
@@ -490,7 +491,7 @@ namespace NeoSharp.Core.Wallet.NEP6
         private String GetNep2FromPublicKeyAndPrivateKey(ECPoint publicKey, byte[] privateKey)
         {
             //Placeholder
-            var contract = _contractHelper.CreateSinglePublicKeyRedeemContract(_crypto, publicKey);
+            var contract = _contractHelper.CreateSinglePublicKeyRedeemContract(publicKey);
             return contract.ScriptHash.ToString();
             //string address = _crypto.ToAddress(contract.ScriptHash);
             //byte[] addresshash = Encoding.ASCII.GetBytes(address).Sha256().Sha256().Take(4).ToArray();
