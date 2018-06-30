@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoSharp.BinarySerialization;
-using NeoSharp.Core.Types.Json;
 using Newtonsoft.Json;
 
 namespace NeoSharp.Core.Wallet.NEP6
@@ -22,7 +20,8 @@ namespace NeoSharp.Core.Wallet.NEP6
         public IEnumerable<IWalletAccount> Accounts { get; set; }
 
 
-        public JObject Extra { get; set; }
+        //TODO: Replace JObject
+        public Object Extra { get; set; }
 
         public NEP6Wallet()
         {

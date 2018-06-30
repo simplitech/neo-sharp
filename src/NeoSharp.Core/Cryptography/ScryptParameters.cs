@@ -1,5 +1,4 @@
 ﻿using System;
-using NeoSharp.Core.Types.Json;
 
 namespace NeoSharp.Core.Wallet
 {
