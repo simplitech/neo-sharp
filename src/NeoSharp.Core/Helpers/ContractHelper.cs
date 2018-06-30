@@ -17,7 +17,7 @@ namespace NeoSharp.Core.Helpers
         /// <param name="scrypt">Scrypt.</param>
         /// <param name="publicKey">Public key.</param>
         public Contract CreateSinglePublicKeyRedeemContract(ICrypto scrypt, ECPoint publicKey){
-            string contractHexCode;
+            String contractHexCode;
             using (ScriptBuilder sb = new ScriptBuilder())
             {
                 sb.EmitPush(publicKey.EncodedData);
@@ -28,10 +28,20 @@ namespace NeoSharp.Core.Helpers
             ContractParameterType returnType = ContractParameterType.Void; 
             ContractParameterType[] parameters = { ContractParameterType.Signature };
 
-            //var contractCode = new Code(scrypt, contractHexCode, returnType, parameters);
-            //var contract = new Contract(contractCode);
+            Code contractCode = new Code {
+                //TODO: Double check if this is correct
+                Script = contractHexCode,
+                ScriptHash = contractHexCode.HexToBytes().ToScriptHash(),
+                ReturnType = returnType,
+                Parameters = parameters
+            };
 
-            return null; // contract;
+            Contract contract = new Contract
+            {
+                Code = contractCode
+            };
+
+            return contract;
         }
 
 
@@ -65,10 +75,21 @@ namespace NeoSharp.Core.Helpers
             ContractParameterType returnType = ContractParameterType.Void; 
             ContractParameterType[] parameters = Enumerable.Repeat(ContractParameterType.Signature, numberOfRequiredPublicKeys).ToArray();
 
-            //var contractCode = new Code(scrypt, contractHexCode, returnType, parameters);
-            //var contract = new Contract(contractCode);
+            Code contractCode = new Code
+            {
+                //TODO: Double check if this is correct
+                Script = contractHexCode,
+                ScriptHash = contractHexCode.HexToBytes().ToScriptHash(),
+                ReturnType = returnType,
+                Parameters = parameters
+            };
 
-            return null; // contract;
+            Contract contract = new Contract
+            {
+                Code = contractCode
+            };
+
+            return contract;
         }
     }
 }
