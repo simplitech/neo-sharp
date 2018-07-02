@@ -26,7 +26,7 @@ namespace NeoSharp.Core.Blockchain
 
             var genesisWitness = GenesisAssets.GenesisWitness();
             var genesisTimestamp = (new DateTime(2016, 7, 15, 15, 8, 21, DateTimeKind.Utc)).ToTimestamp();
-            uint genesisConsensusData = 2083236893; //向比特币致敬
+            ulong genesisConsensusData = 2083236893; //向比特币致敬
 
             var nextConsensusAddress = GenesisAssets.GetGenesisNextConsensusAdress();
 
@@ -35,12 +35,12 @@ namespace NeoSharp.Core.Blockchain
                 PreviousBlockHash = UInt256.Zero,
                 Timestamp = genesisTimestamp,
                 Index = 0,
-                ConsensusData = genesisConsensusData, 
+                ConsensusData = genesisConsensusData,
                 NextConsensus = nextConsensusAddress,
                 Script = genesisWitness,
                 Transactions = new Transaction[]
                    {
-                    //First transaction always a miner transaction
+                    //First transaction is always a miner transaction
                         genesisMinerTransaction,
                     //Creates NEO
                         governingToken,
@@ -48,7 +48,9 @@ namespace NeoSharp.Core.Blockchain
                         utilityToken,
                     //Send all NEO to seed contract
                         genesisInssueTransaction
-                   }
+                }
+
+
             };
 
             // Compute hash
