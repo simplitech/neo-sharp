@@ -50,7 +50,6 @@ namespace NeoSharp.Core.Wallet.Helpers
         /// Creates the multiple public key redeem contract ('multisig account')
         /// </summary>
         /// <returns>The multiple public key redeem contract.</returns>
-        /// <param name="scrypt">Scrypt.</param>
         /// <param name="numberOfRequiredPublicKeys">Number of required public keys.</param>
         /// <param name="publicKeys">Public keys.</param>
         public Contract CreateMultiplePublicKeyRedeemContract(int numberOfRequiredPublicKeys, ECPoint[] publicKeys){
