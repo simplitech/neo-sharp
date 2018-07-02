@@ -28,8 +28,8 @@ namespace NeoSharp.Wallet.TransactionManager
         public ClaimTransaction BuildClaimTransaction(IWallet from, TransactionAttribute[] attributes){
             ClaimTransaction transaction = new ClaimTransaction();
             transaction.Attributes = attributes ?? new TransactionAttribute[0];
-
             //Exclusive Data
+            //transaction.Claims = _repository.GetUnspent();
 
 
             return transaction;
