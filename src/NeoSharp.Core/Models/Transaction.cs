@@ -60,8 +60,7 @@ namespace NeoSharp.Core.Models
         /// Constructor
         /// </summary>
         /// <param name="type">Type</param>
-        /// TODO: Review with the team why this is protected and how to proper use this
-        public Transaction(TransactionType type)
+        protected Transaction(TransactionType type)
         {
             Type = type;
         }

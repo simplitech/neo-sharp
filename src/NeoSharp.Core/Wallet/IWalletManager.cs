@@ -98,7 +98,7 @@ namespace NeoSharp.Core.Wallet
         /// </summary>
         /// <returns>The account.</returns>
         /// <param name="nep2">Nep2.</param>
-        /// <param name="passphrase">Passphrase.</param>
+        /// <param name="password">Passphrase.</param>
         IWalletAccount ImportEncryptedWif(String nep2, SecureString password);
 
         /// <summary>

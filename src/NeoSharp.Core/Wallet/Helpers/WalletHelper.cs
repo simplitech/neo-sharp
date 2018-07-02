@@ -147,7 +147,7 @@ namespace NeoSharp.Core.Wallet.Helpers
             byte[] derivedhalf2 = derivedkey.Skip(32).ToArray();
 
 
-            /// 3 - Do AES256Encrypt(block = privkey[0...15] xor derivedhalf1[0...15], key = derivedhalf2), call the 16-byte result encryptedhalf1
+            /// 3 & 4  - Do AES256Encrypt(block = privkey[0...15] xor derivedhalf1[0...15], key = derivedhalf2), call the 16-byte result encryptedhalf1
             byte[] encryptedKey = _crypto.AesEncrypt(XOR(privateKey, derivedhalf1), derivedhalf2);
 
             /// The encrypted private key is the Base58Check-encoded concatenation of the following, which totals 39 bytes without Base58 checksum:
@@ -157,7 +157,7 @@ namespace NeoSharp.Core.Wallet.Helpers
             buffer[1] = 0x42;
             buffer[2] = 0xe0;
 
-            //Object prefix
+            //Address Hash
             Buffer.BlockCopy(addressHash, 0, buffer, 3, addressHash.Length);
             //Encrypted wif
             Buffer.BlockCopy(encryptedKey, 0, buffer, 7, encryptedKey.Length);

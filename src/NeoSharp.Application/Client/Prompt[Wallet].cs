@@ -21,7 +21,7 @@ namespace NeoSharp.Application.Client
             }
 
             SecureString secureString = _consoleReader.ReadPassword();
-            //TODO: Continue / Send password to save it in json
+
             _walletManager.CreateAccount(secureString);
         }
 
@@ -31,7 +31,6 @@ namespace NeoSharp.Application.Client
             _walletManager.Load(file);
 
             SecureString secureString = _consoleReader.ReadPassword();
-
             _walletManager.UnlockAllAccounts(secureString);
         }
 

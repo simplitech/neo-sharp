@@ -16,7 +16,7 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <returns>The claim transaction.</returns>
         /// <param name="from">From.</param>
         /// <param name="attributes">Attributes.</param>
-        Transaction BuildClaimTransaction(IWalletAccount from, TransactionAttribute[] attributes);
+        ClaimTransaction BuildClaimTransaction(IWallet from, TransactionAttribute[] attributes);
 
         /// <summary>
         /// Builds the ClaimTransaction.
@@ -24,7 +24,7 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <returns>The contract transaction.</returns>
         /// <param name="attributes">Attributes.</param>
         /// <param name="inputs">Inputs.</param>
-         Transaction BuildClaimTransaction(TransactionAttribute[] attributes, CoinReference[] inputs);
+        ClaimTransaction BuildClaimTransaction(TransactionAttribute[] attributes, CoinReference[] inputs);
 
 
         /// <summary>
@@ -38,8 +38,21 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <param name="from">From.</param>
         /// <param name="attributes">Attributes.</param>
         /// <param name="outputs">Outputs.</param>
-        Transaction BuildContractTransaction(IWalletAccount from, TransactionAttribute[] attributes, TransactionOutput[] outputs);
+        ContractTransaction BuildContractTransaction(IWalletAccount from, TransactionAttribute[] attributes, TransactionOutput[] outputs);
 
+
+        /// <summary>
+        /// Builds the contract transaction.
+        /// This is a very common kind of transaction as it allows one wallet to send NEO to another. 
+        /// The inputs and outputs transaction fields will usually be important for this transaction 
+        /// (for example, to govern how much NEO will be sent, and to what address).
+        /// In this method the input will be gathered from all wallet accounts unspent balance.
+        /// </summary>
+        /// <returns>The contract transaction.</returns>
+        /// <param name="from">From.</param>
+        /// <param name="attributes">Attributes.</param>
+        /// <param name="outputs">Outputs.</param>
+        ContractTransaction BuildContractTransaction(IWallet from, TransactionAttribute[] attributes, TransactionOutput[] outputs);
 
         /// <summary>
         /// Builds the contract transaction.
@@ -51,20 +64,7 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <param name="attributes">Attributes.</param>
         /// <param name="inputs">Inputs.</param>
         /// <param name="outputs">Outputs.</param>
-        Transaction BuildContractTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs);
-
-
-        /// <summary>
-        /// Builds the invocation transaction.
-        /// Special transactions for calling Smart Contracts
-        /// </summary>
-        /// <returns>The invocation transaction.</returns>
-        /// <param name="from">From.</param>
-        /// <param name="attributes">Attributes.</param>
-        /// <param name="outputs">Outputs.</param>
-        /// <param name="script">Script.</param>
-        /// <param name="fee">Fee.</param>
-        Transaction BuildInvocationTransaction(IWalletAccount from, TransactionAttribute[] attributes, TransactionOutput[] outputs, String script, Fixed8 fee = default(Fixed8));
+        ContractTransaction BuildContractTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs);
 
         /// <summary>
         /// Builds the invocation transaction.
@@ -76,7 +76,7 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <param name="outputs">Outputs.</param>
         /// <param name="script">Script.</param>
         /// <param name="fee">Fee.</param>
-        Transaction BuildInvocationTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs, String script, Fixed8 fee = default(Fixed8));
+        InvocationTransaction BuildInvocationTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs, String script, Fixed8 fee = default(Fixed8));
 
 
 
