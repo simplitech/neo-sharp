@@ -22,7 +22,7 @@ namespace NeoSharp.Core.Blockchain
             var utilityToken = GenesisAssets.UtilityTokenRegisterTransaction();
 
             var genesisMinerTransaction = GenesisAssets.GenesisMinerTransaction();
-            var genesisInssueTransaction = GenesisAssets.GenesisIssueTransaction();
+            var genesisIssueTransaction = GenesisAssets.GenesisIssueTransaction();
 
             var genesisWitness = GenesisAssets.GenesisWitness();
             var genesisTimestamp = (new DateTime(2016, 7, 15, 15, 8, 21, DateTimeKind.Utc)).ToTimestamp();
@@ -47,7 +47,7 @@ namespace NeoSharp.Core.Blockchain
                     //Creates GAS
                         utilityToken,
                     //Send all NEO to seed contract
-                        genesisInssueTransaction
+                        genesisIssueTransaction
                 }
 
 
