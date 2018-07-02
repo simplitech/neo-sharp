@@ -2,14 +2,15 @@
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using NeoSharp.Core.Cryptography;
 using NeoSharp.Core.Models;
 using NeoSharp.Core.Types;
 using NeoSharp.Core.Wallet.Helpers;
 using NeoSharp.Core.Wallet.NEP6;
 using NeoSharp.TestHelpers;
+
 
 
 namespace NeoSharp.Core.Wallet.Test
@@ -181,6 +182,7 @@ namespace NeoSharp.Core.Wallet.Test
         {
             // Act
             IWalletAccount walletAccount = _walletManager.ImportEncryptedWif("6PYVwbrWfiyKCFnj4EjjBESUer4hbQ48hPfn8as8ivyS3FTVVmAJomvYuv", _defaultPassword);
+
 
             // Asset
             Assert.IsNotNull(walletAccount);

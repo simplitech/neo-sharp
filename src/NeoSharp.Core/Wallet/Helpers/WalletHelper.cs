@@ -79,7 +79,8 @@ namespace NeoSharp.Core.Wallet.Helpers
             Buffer.BlockCopy(data, 3, addressHash, 0, 4);
 
             //Passphrase encoded in UTF - 8 and normalized using Unicode Normalization Form C(NFC). 
-            var passphraseUtf8String = Encoding.UTF8.GetBytes(passphrase.ToString());
+            //Check with Belane
+            var passphraseUtf8String = Helper.ToArray(passphrase);
 
 
             //Derive derivedhalf1 and derivedhalf2 by passing the passphrase and addresshash into scrypt function.
@@ -134,7 +135,8 @@ namespace NeoSharp.Core.Wallet.Helpers
             var addressHash = _crypto.Sha256(_crypto.Sha256(addressBytes)).Take(4).ToArray();
 
             //Passphrase encoded in UTF - 8 and normalized using Unicode Normalization Form C(NFC). 
-            var passphraseUtf8String = Encoding.UTF8.GetBytes(passphrase.ToString());
+            //TODO: Check if its using UTF-8 (doesn't look like its using any kind of encoding)
+            var passphraseUtf8String = Helper.ToArray(passphrase);
 
             /// 2 - Derive a key from the passphrase using scrypt
             ///     Parameters: passphrase is the passphrase itself encoded in UTF-8 and normalized using Unicode Normalization Form C(NFC). 

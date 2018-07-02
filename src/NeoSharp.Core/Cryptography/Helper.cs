@@ -24,7 +24,9 @@ namespace NeoSharp.Core.Cryptography
             return passwordHash;
         }
 
-        internal static byte[] ToArray(this SecureString s)
+        //TODO: Ask Belane how can we use this feature in the wallet module
+        // I changed it from internal to public. Probably not a good idea.
+        public static byte[] ToArray(this SecureString s)
         {
             if (s == null)
                 throw new NullReferenceException();
