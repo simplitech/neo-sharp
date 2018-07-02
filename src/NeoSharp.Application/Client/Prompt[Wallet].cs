@@ -22,7 +22,7 @@ namespace NeoSharp.Application.Client
 
             SecureString secureString = _consoleReader.ReadPassword();
             //TODO: Continue / Send password to save it in json
-            _walletManager.CreateAccount();
+            _walletManager.CreateAccount(secureString);
         }
 
         [PromptCommand("wallet open", Category = "Wallet", Help = "Open wallet")]
@@ -32,7 +32,7 @@ namespace NeoSharp.Application.Client
 
             SecureString secureString = _consoleReader.ReadPassword();
 
-            _walletManager.UnlockAllAccounts(secureString.ToString());
+            _walletManager.UnlockAllAccounts(secureString);
         }
 
         [PromptCommand("wallet close", Category = "Wallet", Help = "Close wallet")]
@@ -44,14 +44,15 @@ namespace NeoSharp.Application.Client
         [PromptCommand("import wif", Category = "Wallet", Help = "Close wallet")]
         private void ImportWif(string wif)
         {
-            _walletManager.Import(wif);
+            SecureString secureString = _consoleReader.ReadPassword();
+            _walletManager.ImportWif(wif, secureString);
         }
 
         [PromptCommand("import nep2", Category = "Wallet", Help = "Close wallet")]
         private void ImportNep2(string nep2key)
         {
             SecureString secureString = _consoleReader.ReadPassword();
-            _walletManager.Import(nep2key, secureString.ToString());
+            _walletManager.ImportEncryptedWif(nep2key, secureString);
         }
 
         /*
