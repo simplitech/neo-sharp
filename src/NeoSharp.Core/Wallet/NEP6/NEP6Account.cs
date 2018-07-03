@@ -18,5 +18,11 @@ namespace NeoSharp.Core.Wallet.NEP6
 
         [JsonProperty("extra")]
         public Object Extra { get; set; }
+
+        //TODO: Refactor
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

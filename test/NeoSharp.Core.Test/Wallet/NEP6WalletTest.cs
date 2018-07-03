@@ -9,6 +9,7 @@ using NeoSharp.Core.Models;
 using NeoSharp.Core.Types;
 using NeoSharp.Core.Wallet.Helpers;
 using NeoSharp.Core.Wallet.NEP6;
+using NeoSharp.Core.Wallet.Wrappers;
 using NeoSharp.TestHelpers;
 
 
@@ -22,8 +23,6 @@ namespace NeoSharp.Core.Wallet.Test
         WalletHelper _walletHelper;
         SecureString _defaultPassword;
 
-        ICrypto _crypto;
-        FileInfo TestWalletFile;
 
         [TestInitialize]
         public void Init()
@@ -32,13 +31,13 @@ namespace NeoSharp.Core.Wallet.Test
             Random random = new Random();
             String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             String fileName = new string(Enumerable.Repeat(chars, 10).Select(s => s[random.Next(s.Length)]).ToArray());
-            TestWalletFile = new FileInfo(fileName);
 
-            _crypto = AutoMockContainer.Create<BouncyCastleCrypto>();
-            _walletManager = new Nep6WalletManager(_crypto);
-            _walletManager.CreateWallet(TestWalletFile);
+            //TODO: Mock
+            _walletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper());
+            //TODO: Remove & Mock
+            _walletManager.CreateWallet(fileName);
 
-            _walletHelper = new WalletHelper(_crypto);
+            _walletHelper = new WalletHelper();
             _defaultPassword = new SecureString();
             _defaultPassword.AppendChar('1');
             _defaultPassword.AppendChar('2');
@@ -53,11 +52,6 @@ namespace NeoSharp.Core.Wallet.Test
 
         }
 
-        [TestCleanup]
-        public void CleanUp()
-        {
-            TestWalletFile.Delete();
-        }
 
         [TestMethod]
         public void TestGetAccount()
@@ -76,7 +70,7 @@ namespace NeoSharp.Core.Wallet.Test
             // Act
             IWalletAccount walletAccount = _walletManager.ImportWif("KxLNhtdXXqaYUW1DKBc1XYQLxhouxXPLgQhR8kk7SYG3ajjR8M8a", _defaultPassword);
             byte[] privateKey = GetPrivateKeyFromWIF("KxLNhtdXXqaYUW1DKBc1XYQLxhouxXPLgQhR8kk7SYG3ajjR8M8a");
-            ECPoint publicKey = new ECPoint(_crypto.ComputePublicKey(privateKey, true));
+            ECPoint publicKey = new ECPoint(ICrypto.Default.ComputePublicKey(privateKey, true));
 
             IWalletAccount walletAccount2 = _walletManager.GetAccount(publicKey);
 
@@ -171,7 +165,7 @@ namespace NeoSharp.Core.Wallet.Test
             // Asset
             Assert.IsNotNull(walletAccount);
 
-            String address = _walletHelper.ScriptHashToAddress(walletAccount.Contract.ScriptHash);
+            String address = walletAccount.Contract.ScriptHash.ToAddress();
             Assert.IsTrue(address.Equals("AdYJeaHepN3jmdUduBLWPESqwQ9QYQCFi7"));
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 1);
@@ -187,7 +181,7 @@ namespace NeoSharp.Core.Wallet.Test
             // Asset
             Assert.IsNotNull(walletAccount);
 
-            String address = _walletHelper.ScriptHashToAddress(walletAccount.Contract.ScriptHash);
+            String address = walletAccount.Contract.ScriptHash.ToAddress();
             Assert.IsTrue(address.Equals("AdYJeaHepN3jmdUduBLWPESqwQ9QYQCFi7"));
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 1);
@@ -202,7 +196,7 @@ namespace NeoSharp.Core.Wallet.Test
             // Asset
             Assert.IsNotNull(walletAccount);
 
-            String address = _walletHelper.ScriptHashToAddress(walletAccount.Contract.ScriptHash);
+            String address = walletAccount.Contract.ScriptHash.ToAddress();
             Assert.IsTrue(address.Equals("AdYJeaHepN3jmdUduBLWPESqwQ9QYQCFi7"));
 
             Assert.IsTrue(_walletManager.Wallet.Accounts.ToList().Count == 1);
@@ -360,7 +354,7 @@ namespace NeoSharp.Core.Wallet.Test
                 throw new ArgumentNullException();
             }
 
-            byte[] data = _crypto.Base58CheckDecode(wif);
+            byte[] data = ICrypto.Default.Base58CheckDecode(wif);
 
             if (data.Length != 34 || data[0] != 0x80 || data[33] != 0x01)
             {

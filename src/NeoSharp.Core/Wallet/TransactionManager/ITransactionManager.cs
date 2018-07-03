@@ -76,7 +76,7 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <param name="outputs">Outputs.</param>
         /// <param name="script">Script.</param>
         /// <param name="fee">Fee.</param>
-        InvocationTransaction BuildInvocationTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs, String script, Fixed8 fee = default(Fixed8));
+        InvocationTransaction BuildInvocationTransaction(TransactionAttribute[] attributes, CoinReference[] inputs, TransactionOutput[] outputs, string script, Fixed8 fee = default(Fixed8));
 
 
 
@@ -92,8 +92,6 @@ namespace NeoSharp.Wallet.TransactionManager
         /// <returns>The unspent coins.</returns>
         /// <param name="from">From.</param>
         Dictionary<UInt256, List<CoinReference>> GetBalance(IWalletAccount from);
-
-
 
 
     }

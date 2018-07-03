@@ -18,7 +18,7 @@ namespace NeoSharp.Core.Wallet.Helpers
         /// <returns>The single public key redeem contract.</returns>
         /// <param name="publicKey">Public key.</param>
         public Contract CreateSinglePublicKeyRedeemContract(ECPoint publicKey){
-            String contractHexCode;
+            string contractHexCode;
             using (ScriptBuilder sb = new ScriptBuilder())
             {
                 sb.EmitPush(publicKey.EncodedData);

@@ -4,7 +4,7 @@ using NeoSharp.Core.Types;
 
 namespace NeoSharp.Core.Wallet
 {
-    public interface IWalletAccount 
+    public interface IWalletAccount : ICloneable 
     {
         /// <summary>
         /// label is a label that the user has made to the account.
@@ -27,7 +27,7 @@ namespace NeoSharp.Core.Wallet
         /// key is the private key of the account in the NEP-2 format. This
         /// field can be null (for watch-only address or non-standard address).
         /// </summary>
-        String Key { get; }
+        string Key { get; }
 
         /// <summary>
         /// contract is a Contract object which describes the details of the
@@ -39,6 +39,6 @@ namespace NeoSharp.Core.Wallet
         /// extra is an object that is defined by the implementor of the client
         /// for storing extra data. This field can be null
         /// </summary>
-        Object Extra { get; set; }
+        object Extra { get; set; }
     }
 }
