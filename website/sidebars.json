@@ -1,8 +1,9 @@
 {
   "docs": {
-    "Blockchain": ["block", "header", "blockchain", "hash"],
-    "Development": ["unit_test"],
-    "NEO-Sharp": ["dependency_injection", "modules"],
+    "Blockchain": ["block", "header", "blockchain", "hash", "cryptography", "unspent_transaction_output"],
+    "Development": ["dependency_injection", "unit_test", "linq", "attributes", "partial_class", "code_style", "extensions"],
+    "NEO": ["contract"]
+    "NEO-Sharp": ["modules", "logging"],
     "Tools": ["dotnetcore", "ide", "git", "platform"]
   },
   "docs-other": {
