@@ -4,6 +4,8 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "C# Node for the NEO blockchain.",
+    "dependency_injection": "Dependency Injection",
+    "Dependency Injection": "Dependency Injection",
     "doc1": "Latin-ish",
     "Example Page": "Example Page",
     "doc2": "document number 2",
@@ -16,7 +18,8 @@
     "Blog": "Blog",
     "Docusaurus": "Docusaurus",
     "First Category": "First Category",
-    "Second Category": "Second Category"
+    "Second Category": "Second Category",
+    "Neo-sharp": "Neo-sharp"
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",
