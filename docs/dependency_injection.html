@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Dependecy Injection (DI) · neo-sharp</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## About"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Dependecy Injection (DI) · neo-sharp"/><meta property="og:type" content="website"/><meta property="og:url" content="https://your-docusaurus-test-site.com/neo-sharp/index.html"/><meta property="og:description" content="## About"/><meta property="og:image" content="https://your-docusaurus-test-site.com/neo-sharp/img/logo.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://your-docusaurus-test-site.com/neo-sharp/img/logo.png"/><link rel="shortcut icon" href="/neo-sharp/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://your-docusaurus-test-site.com/neo-sharp/blog/atom.xml" title="neo-sharp Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://your-docusaurus-test-site.com/neo-sharp/blog/feed.xml" title="neo-sharp Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/neo-sharp/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/neo-sharp/"><img class="logo" src="/neo-sharp/img/logo.svg" alt="neo-sharp"/><h2 class="headerTitleWithLogo">neo-sharp</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/neo-sharp/docs/doc1.html" target="_self">Docs</a></li><li class=""><a href="/neo-sharp/docs/doc4.html" target="_self">API</a></li><li class=""><a href="/neo-sharp/en/help.html" target="_self">Help</a></li><li class=""><a href="/neo-sharp/blog" target="_self">Blog</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Dependecy Injection (DI)</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="about"></a><a href="#about" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>About</h2>
+<p>Dependency Injection gives a project the flexibility add an replace code in a project. Since the code does not rely on a concrete implementation, but rather a Interface, it’s much easier to replace a module when necessary.</p>
+<p>If we use Interfaces in our projects, we already reduce the dependency between classes,
+But the problem is that somewhere in the code, you need to instantiate the concrete class, and if this is not done correctly, your classes will still depend on the concrete implementation.</p>
+<p>The best way to avoid this high coupling scenario (the need of knowing the concrete class in advance), we add another actor that is responsible for instantiating the concrete classes, so the modules don’t have any association with the concrete class, thus eliminating any dependency from one module from another.</p>
+<p>We can resume Dependency Injection as the class/object responsible for managing the dependencies of other classes.</p>
+<p>This promotes reusability, testability and maintainability of a project, because you no longer require concrete implementations, only Interfaces.</p>
+<p>In neo-sharp, we use our own dependency injection mechanism, but most of the programming languages already have some sort of ‘native’ dependency injection.</p>
+<p>For more information, please refer to <a href="https://en.wikipedia.org/wiki/Dependency_injection">wiki</a>.</p>
+<p>In neo-sharp, the dependencies are inserted in the constructor of an object, and to this work, it’s necessary to register the modules, so the DI class know which implementations are available for each interface.</p>
+<h2><a class="anchor" aria-hidden="true" id="new-module"></a><a href="#new-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>New Module</h2>
+<ul>
+<li>Create a new folder in the NeoSharp project following the current naming structure ‘NeoSharp.YourModule’;</li>
+<li>Create an Interface containing your module specifications. You can find an example in NeoSharp.Core/Persistence/IRepository.cs.</li>
+<li>Create an implementation for your Interface. In neo-sharp we have two implementations for the same interface, which means that we can easily change the desired implementation.
+Both NeoSharp.Persistence.RedisDB/RedisDbRepository and NeoSharp.Persistence.RocksDB/RocksDbRepository implement the IRepository interface.</li>
+</ul>
+<pre><code class="hljs">            var cfg = PersistenceConfig.<span class="hljs-keyword">Instance();
+</span>
+            <span class="hljs-keyword">switch </span>(cfg.Provider)
+            {
+                case RedisDbConfig.Provider:
+                    {
+                        containerBuilder.RegisterSingleton&lt;RedisDbConfig&gt;()<span class="hljs-comment">;</span>
+                        containerBuilder.RegisterSingleton&lt;IRepository, RedisDbRepository&gt;()<span class="hljs-comment">;</span>
+                        containerBuilder.RegisterSingleton&lt;IRedisDbContext, RedisDbContext&gt;()<span class="hljs-comment">;</span>
+                        <span class="hljs-keyword">break;
+</span>                    }
+
+                case RocksDbConfig.Provider:
+                    {
+                        containerBuilder.RegisterSingleton&lt;RocksDbConfig&gt;()<span class="hljs-comment">;</span>
+                        containerBuilder.RegisterSingleton&lt;IRepository, RocksDbRepository&gt;()<span class="hljs-comment">;</span>
+                        containerBuilder.RegisterSingleton&lt;IRocksDbContext, RocksDbContext&gt;()<span class="hljs-comment">;</span>
+                        <span class="hljs-keyword">break;
+</span>                    }
+<span class="hljs-symbol">
+                default:</span>
+                    throw new Exception($<span class="hljs-string">"The persistence configuration contains unknown provider \"{cfg.Provider}\""</span>)<span class="hljs-comment">;</span>
+            }
+</code></pre>
+<ul>
+<li>In neo-sharp, unit test its mandatory, for more information [LINK_UNIT_TEST]</li>
+</ul>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#about">About</a></li><li><a href="#new-module">New Module</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/neo-sharp/" class="nav-home"><img src="/neo-sharp/img/logo.svg" alt="neo-sharp" width="66" height="58"/></a><div><h5>Docs</h5><a href="/neo-sharp/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/neo-sharp/docs/en/doc2.html">Guides (or other categories)</a><a href="/neo-sharp/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="/neo-sharp/en/users.html">User Showcase</a><a href="http://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/neo-sharp/blog">Blog</a><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/neo-sharp/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2018 Your Name or Your Company Name</section></footer></div></body></html>
