@@ -14,4 +14,5 @@
 <url> <loc>https://your-docusaurus-test-site.com/docs/doc3.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://your-docusaurus-test-site.com/docs/doc3.html" /> </url>
 <url> <loc>https://your-docusaurus-test-site.com/docs/doc4.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://your-docusaurus-test-site.com/docs/doc4.html" /> </url>
 <url> <loc>https://your-docusaurus-test-site.com/docs/doc5.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://your-docusaurus-test-site.com/docs/doc5.html" /> </url>
+<url> <loc>https://your-docusaurus-test-site.com/docs/modules.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://your-docusaurus-test-site.com/docs/modules.html" /> </url>
 </urlset>
