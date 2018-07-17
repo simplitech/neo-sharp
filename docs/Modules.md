@@ -4,7 +4,7 @@ title: Modules
 sidebar_label: Modules
 ---
 
-Follow existing modules in NeoSharp:
+Follow all existing modules in NeoSharp:
 
 ```
 NeoSharp.Application/DI/ClientModule.cs
@@ -18,11 +18,6 @@ NeoSharp.Core/DI/Modules/BlockchainModule.cs
 NeoSharp.Core/DI/Modules/HelpersModule.cs
 NeoSharp.Core/DI/Modules/NetworkModule.cs
 ```
-
-## CoreModule
-
-It's responsable to register BlockchainModule, HelpersModule and NetworkModule
-
 
 ## Create a new module
 
