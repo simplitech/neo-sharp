@@ -31,7 +31,7 @@ const siteConfig = {
 
   // Used for publishing and more
   projectName: 'neo-sharp',
-  organizationName: 'City of Zion',
+  organizationName: 'simplitech',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
