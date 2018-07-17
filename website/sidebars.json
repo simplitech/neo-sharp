@@ -1,9 +1,9 @@
 {
   "docs": {
-    "Docusaurus": ["doc1"],
-    "First Category": ["doc2"],
-    "Second Category": ["doc3"],
-    "Neo-sharp": ["dependency_injection", "modules"]
+    "Blockchain": ["block", "header", "blockchain", "hash"],
+    "Development": ["unit_test"],
+    "NEO-Sharp": ["dependency_injection", "modules"],
+    "Tools": ["dotnetcore", "ide", "git", "platform"]
   },
   "docs-other": {
     "First Category": ["doc4", "doc5"]
