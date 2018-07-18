@@ -4,25 +4,47 @@ title: Modules
 sidebar_label: Modules
 ---
 
-Follow existing modules in NeoSharp:
+## Application
 
 ```
 NeoSharp.Application/DI/ClientModule.cs
-NeoSharp.Application/DI/ConfigurationModule.cs
-NeoSharp.Application/DI/LoggingModule.cs
-NeoSharp.Application/DI/PersistenceModule.cs
 NeoSharp.Application/DI/SerializationModule.cs
-NeoSharp.Application/DI/WalletModule.cs
+```
+
+## Configuration
+
+```
+NeoSharp.Application/DI/ConfigurationModule.cs
+```
+
+## Core
+
+```
 NeoSharp.Core/DI/CoreModule.cs
 NeoSharp.Core/DI/Modules/BlockchainModule.cs
 NeoSharp.Core/DI/Modules/HelpersModule.cs
 NeoSharp.Core/DI/Modules/NetworkModule.cs
 ```
 
-## CoreModule
+## Serialization
 
-It's responsable to register BlockchainModule, HelpersModule and NetworkModule
+```
+NeoSharp.Application/DI/PersistenceModule.cs
+```
 
+## Logging
+
+```
+NeoSharp.Application/DI/LoggingModule.cs
+```
+
+## Wallet
+
+```
+NeoSharp.Application/DI/WalletModule.cs
+```
+
+## VM
 
 ## Create a new module
 
@@ -92,6 +114,4 @@ Example:
 containerBuilder.RegisterModule<PersistenceModule>();
 ```
 
-In neo-sharp, unit test its mandatory, for more information [UNIT TEST](doc1)
-
-
+In neo-sharp, unit test its mandatory, for more information [UNIT TEST](unit_test)
