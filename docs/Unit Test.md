@@ -14,3 +14,5 @@ Unit testing is also useful to prevent that future changes in other parts of the
 Since our code uses mostly Interfaces instead of concrete implementations, is very easy to mock the behavior of a class, making it easy to test only the particular parts of the code you are interested in.
 
 NEO-Sharp aims for 90% of test coverage, and we use tools like travis and codecov to ensure this coverage.
+
+## Code Coverage

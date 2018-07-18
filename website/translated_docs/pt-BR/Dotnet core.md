@@ -8,4 +8,10 @@ Projeto NEO-Sharp é construido utilizando C# com .NET Core. C# é uma linguagem
 
 C# pode ser utilizando com .NET Framework (diferente do .NET Core), mas ficará compatível apenas com Windows, por esse motivo usamos .NET Core,
 
+## Atributos (Anotação)
 
+## Extensão
+
+## LINQ
+
+## Classe Parcial
