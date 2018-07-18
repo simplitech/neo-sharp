@@ -1,46 +1,46 @@
 ---
 id: modules
-title: Modules
-sidebar_label: Modules
+title: Módulos
+sidebar_label: Módulos
 ---
 
 ## VM
 
-## Create a new module
+## Criando novo módulo
 
-Create a new folder in the NeoSharp.Core project following the naming structure 'ModuleName';
+Crie uma nova pasta no projeto NeoSharp.Core seguindo a seguinte estrutura de nome 'NomeModulo';
 
 ```
-Example:
+Exemplo:
 NeoSharp.Core/Persistence
 ```
 
-Create an Interfaces containing your module specifications. 
+Crie uma interface contendo especificação do seu módulo
 
 ```
-Example:
+Exemplo:
 NeoSharp.Core/Persistence/IRepository.cs
 ```
 
-Create an implementations for your Interface. In neo-sharp we have two implementations for the same interface, which means that we can easily change the desired implementation.
+Crie implementações da sua interface. Em NEO-Sharp nós temos duas implementações para a mesma interface, ou seja, podemos facilmente trocar qual das implementações utilizar.
 
 ```
-Example:
+Exemplo:
 NeoSharp.Persistence.RedisDB/RedisDbRepository.cs
 NeoSharp.Persistence.RocksDB/RocksDbRepository.cs
 ```
 
-Create a class to register your dependency injection in the NeoSharp.Application/DI project.
+Crie a classe para registrar sua injeção de dependência no projeto NeoSharp.Application/DI.
 
 ```
-Example:
+Exemplo:
 NeoSharp.Application/DI/PersistenceModule.cs
 ```
 
-Check your configuration file and choose which one implementation will be use, to register use 'containerBuilder.RegisterSingleton' or  'containerBuilder.Register'.
+Pode verificar o seu arquivo de configuração e escolher qual das implementações utilizar, use 'containerBuilder.RegisterSingleton' ou  'containerBuilder.Register' para registrar.
 
 ```
-Example:
+Exemplo:
 
 var cfg = PersistenceConfig.Instance();
 
@@ -67,11 +67,11 @@ switch (cfg.Provider)
 }
 ```
 
-To register your module onto application, add method 'containerBuilder.RegisterModule' in 'NeoSharp.Application/Program.cs'
+Para registrar seu módulo dentro da aplicação adicione o método 'containerBuilder.RegisterModule' em 'NeoSharp.Application/Program.cs'
 
 ```
-Example:
+Exemplo:
 containerBuilder.RegisterModule<PersistenceModule>();
 ```
 
-In neo-sharp, unit test its mandatory, for more information [UNIT TEST](unit_test)
+Em NEO-Sharp, teste unitário e obrigatório, para mais informação [UNIT TEST](unit_test)
