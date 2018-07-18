@@ -1,7 +1,7 @@
 ---
 id: gas
-title: Gas
-sidebar_label: Gas
+title: GAS
+sidebar_label: GAS
 ---
 
 # About
