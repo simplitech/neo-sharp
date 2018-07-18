@@ -16,3 +16,5 @@ Since our code uses mostly Interfaces instead of concrete implementations, is ve
 NEO-Sharp aims for 90% of test coverage, and we use tools like travis and codecov to ensure this coverage.
 
 ## Code Coverage
+
+## Travis
