@@ -5,6 +5,6 @@
     "NEO": ["compiler", "consensus", "contract", "fees", "gas", "neo_vm", "nep", "network_protocol", "nodes", "rpc", "transaction_types", "verification", "wallets", "witness"],
     "NEO-Sharp": ["logging", "modules"],
     "Development": ["attributes", "best_practices", "code_style", "codecoverage", "dependency_injection", "extensions", "linq", "partial_class", "unit_test"],
-    "Tools": ["dotnetcore", "ide", "git", "neo_tools", "platform"]
+    "Tools": ["dotnetcore", "documentation", "ide", "git", "neo_tools", "platform"]
   }
 }

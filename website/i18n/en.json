@@ -34,6 +34,8 @@
     "Dependency Injection": "Dependency Injection",
     "docs": "Introduction",
     "Introduction": "Introduction",
+    "documentation": "Documentation",
+    "Documentation": "Documentation",
     "dotnetcore": ".NET Core",
     ".NET Core": ".NET Core",
     "extensions": "Extensions",
