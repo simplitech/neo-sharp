@@ -6,12 +6,6 @@
  */
 
 const React = require('react');
-
-const CompLibrary = require('../../core/CompLibrary.js');
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
-const Container = CompLibrary.Container;
-const GridBlock = CompLibrary.GridBlock;
-
 const siteConfig = require(process.cwd() + '/siteConfig.js');
 
 function imgUrl(img) {
@@ -55,10 +49,10 @@ class HomeSplash extends React.Component {
     let language = this.props.language || '';
     return (
       <div className="homeContainer">
-        <img src={imgUrl('coz.svg')} class="organizationLogo"/>
+        <img src={imgUrl('coz.svg')} className="organizationLogo"/>
         <div className="homeSplashFade">
           <div className="wrapper homeWrapper">
-            <img src={imgUrl('logo.svg')} class="projLogo"/>
+            <img src={imgUrl('logo.svg')} className="projLogo"/>
             <h2 className="projectTitle">
               {siteConfig.title}
               <small>{siteConfig.tagline}</small>
@@ -70,69 +64,6 @@ class HomeSplash extends React.Component {
   }
 }
 
-const Block = props => (
-  <Container
-    padding={['bottom', 'top']}
-    id={props.id}
-    background={props.background}>
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
-  </Container>
-);
-
-const Features = props => (
-  <Block layout="fourColumn">
-    {[
-      {
-        content: 'This is the content of my feature',
-        image: imgUrl('logo.svg'),
-        imageAlign: 'top',
-        title: 'Feature One',
-      },
-      {
-        content: 'The content of my second feature',
-        image: imgUrl('logo.svg'),
-        imageAlign: 'top',
-        title: 'Feature Two',
-      },
-    ]}
-  </Block>
-);
-
-const FeatureCallout = props => (
-  <div
-    className="productShowcaseSection paddingBottom"
-    style={{textAlign: 'center'}}>
-    <h2>Feature Callout</h2>
-    <MarkdownBlock>These are features of this project</MarkdownBlock>
-  </div>
-);
-
-const LearnHow = props => (
-  <Block background="light">
-    {[
-      {
-        content: 'Talk about learning how to use this',
-        image: imgUrl('logo.svg'),
-        imageAlign: 'right',
-        title: 'Learn How',
-      },
-    ]}
-  </Block>
-);
-
-const TryOut = props => (
-  <Block id="try">
-    {[
-      {
-        content: 'Talk about trying this out',
-        image: imgUrl('logo.svg'),
-        imageAlign: 'left',
-        title: 'Try it Out',
-      },
-    ]}
-  </Block>
-);
-
 class Index extends React.Component {
   render() {
     let language = this.props.language || '';
@@ -141,10 +72,10 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
-          <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
+          <div className="centerBlock">
+            <h1>Learn how to contribute to the project</h1>
+            <a href={docUrl('docs.html', language)} className="button">Documentation</a>
+          </div>
         </div>
       </div>
     );

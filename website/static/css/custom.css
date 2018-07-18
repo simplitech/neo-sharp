@@ -11,7 +11,7 @@
     width: 400px;
     height: 400px;
     left: 20px;
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 .homeWrapper .projLogo {
@@ -25,4 +25,8 @@
 .projectTitle small {
 	color: rgba(255, 255, 255, 0.6);
 	font-weight: 100;
+}
+
+.centerBlock {
+	text-align: center;
 }

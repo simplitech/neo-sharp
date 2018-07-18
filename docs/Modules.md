@@ -115,5 +115,3 @@ containerBuilder.RegisterModule<PersistenceModule>();
 ```
 
 In neo-sharp, unit test its mandatory, for more information [UNIT TEST](unit_test)
-
-
