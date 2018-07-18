@@ -9,6 +9,12 @@ NEO-Sharp project is built using C# on top of .NET Core. C# is the programming l
 
 C# can also be used with .NET Framework (different from .NET Core), but this is only compatible with Windows, and for that reason, .NET Core is used instead.
 
+## IDE
+
+It's better to use a Integrated Development Environment to have features like debugging and auto-complete. 
+
+For C#, the most recommended are Visual Studio and Visual Code. You can download it here: https://visualstudio.microsoft.com/
+
 ## Attributes (Annotations)
 
 ## Extensions

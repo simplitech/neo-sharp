@@ -4,51 +4,6 @@ title: Modules
 sidebar_label: Modules
 ---
 
-## Application
-
-```
-NeoSharp.Application/DI/ClientModule.cs
-```
-
-## Configuration
-
-```
-NeoSharp.Application/DI/ConfigurationModule.cs
-```
-
-## Core
-
-```
-NeoSharp.Core/DI/CoreModule.cs
-NeoSharp.Core/DI/Modules/BlockchainModule.cs
-NeoSharp.Core/DI/Modules/HelpersModule.cs
-NeoSharp.Core/DI/Modules/NetworkModule.cs
-```
-
-## Serialization
-
-```
-NeoSharp.Application/DI/SerializationModule.cs
-```
-
-## Persistence
-
-```
-NeoSharp.Application/DI/PersistenceModule.cs
-```
-
-## Logging
-
-```
-NeoSharp.Application/DI/LoggingModule.cs
-```
-
-## Wallet
-
-```
-NeoSharp.Application/DI/WalletModule.cs
-```
-
 ## VM
 
 ## Create a new module
