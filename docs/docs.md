@@ -1,5 +1,5 @@
 ---
-id: introduction
+id: docs
 title: Introduction
 sidebar_label: Introduction
 ---
