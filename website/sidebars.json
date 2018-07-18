@@ -2,7 +2,7 @@
   "docs": {
     "Blockchain": ["block", "header", "blockchain", "hash", "cryptography", "unspent_transaction_output"],
     "Development": ["dependency_injection", "unit_test", "linq", "attributes", "partial_class", "code_style", "extensions"],
-    "NEO": ["contract"]
+    "NEO": ["contract", "neo_vm", "transaction_types"],
     "NEO-Sharp": ["modules", "logging"],
     "Tools": ["dotnetcore", "ide", "git", "platform"]
   },
