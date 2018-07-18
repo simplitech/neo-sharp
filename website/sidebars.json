@@ -1,5 +1,6 @@
 {
   "docs": {
+    "Home": ["docs"],
     "Blockchain": ["block", "header", "blockchain", "hash", "cryptography", "unspent_transaction_output"],
     "Development": ["dependency_injection", "unit_test", "linq", "attributes", "partial_class", "code_style", "extensions"],
     "NEO": ["contract", "neo_vm", "transaction_types"],
