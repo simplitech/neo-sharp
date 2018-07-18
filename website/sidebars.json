@@ -1,13 +1,10 @@
 {
   "docs": {
-    "Home": ["docs"],
-    "Blockchain": ["block", "header", "blockchain", "hash", "cryptography", "unspent_transaction_output"],
-    "Development": ["dependency_injection", "unit_test", "linq", "attributes", "partial_class", "code_style", "extensions"],
-    "NEO": ["contract", "neo_vm", "transaction_types"],
-    "NEO-Sharp": ["modules", "logging"],
-    "Tools": ["dotnetcore", "ide", "git", "platform"]
-  },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+    "Home": ["introduction"],
+    "Blockchain": ["block", "blockchain", "cryptography", "hash", "header", "unspent_transaction_output"],
+    "NEO": ["compiler", "consensus", "contract", "fees", "gas", "neo_vm", "nep", "network_protocol", "nodes", "rpc", "transaction_types", "verification", "wallets", "witness"],
+    "NEO-Sharp": ["logging", "modules"],
+    "Development": ["attributes", "code_style", "codecoverage", "dependency_injection", "extensions", "linq", "partial_class", "unit_test"],
+    "Tools": ["dotnetcore", "ide", "git", "neo_tools", "platform"]
   }
 }

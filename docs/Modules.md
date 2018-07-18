@@ -8,7 +8,6 @@ sidebar_label: Modules
 
 ```
 NeoSharp.Application/DI/ClientModule.cs
-NeoSharp.Application/DI/SerializationModule.cs
 ```
 
 ## Configuration
@@ -27,6 +26,12 @@ NeoSharp.Core/DI/Modules/NetworkModule.cs
 ```
 
 ## Serialization
+
+```
+NeoSharp.Application/DI/SerializationModule.cs
+```
+
+## Persistence
 
 ```
 NeoSharp.Application/DI/PersistenceModule.cs
