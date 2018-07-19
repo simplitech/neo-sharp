@@ -1,43 +1,60 @@
 ---
 id: git
-title: GIT / GITHUB
-sidebar_label: GIT / GITHUB
+title: Git / GitHub
+sidebar_label: Git / GitHub
 ---
-NEO-Sharp uses Git as it's source control system. To interact with the project, you must install it first.
+The first step to contribute with open source project is to fork the repository that you want to collaborate. When you fork a project, you create your own copy of it, meaning you can make changes without affecting the original project.
 
-The next step to contribute with open source project is to fork the repository that you want to collaborate. When you fork a project, you create your own copy of the project, meaning you can make changes to it without affecting the original project.
-
-Also, forking is necessary to propose changes to the original project. 
 If you are new to Git, we suggest you to use a graphical interface instead of using the command line.
 
 ## Git installation
-For Git installation, please follow the instructions described here: https://help.github.com/articles/set-up-git/
+For Git installation, please follow the instructions described [here](https://help.github.com/articles/set-up-git/)
+
+## How to use Git to collaborate with NEO-Sharp
+The steps below are the first steps needed to contribute with the project. Follow the links in the steps for a more detailed explanation about each step.
+
+- [Fork](#fork) the project;
+- [Clone](#clone) the forked project in your machine;
+- [Add a new remote](#adding-a-new-remote) using the official project URL;
+- Create a [new branch](#branchs) in your repository using the name of the feature you want to implement, like "openWallet";
+	- It's a good practice to create a branch for every new feature you want to add, instead of working in a single branch;
+- Make the desired changes and [commit](#commit) it;
+	- Remember, [unit testing](unit_test) is highly enforced in this project, so avoid sending any pull request without proper unit testing;
+- [Rebase](#rebase) your repository using the official project remote;
+- [Push](#push) your changes to your repository (a force push might be required)
+- Open GitHub website, click PullRequests and Create a new [Pull Request](#pull-request)
+- Select the Development branch from the official project (in the left), and your feature branch in the right and click "Create Pull Request".
+- Follow the discussions on your pull request and perform changes required by the team. The required changes can vary from very simple changes, to more complex ones.
+
+Every time you push changes to the branch you want to merge, the pull request will be automatically updated.
 
 ## Fork
 Forking is the first step to start collaborating. You fork the project to create your own version of it, so you can change it without affecting the original project.
 
-After forking it, you will notice that your new project is related to the original one https://help.github.com/articles/fork-a-repo/
+After forking it, you will notice that your new project is related to the original one.
 
 ## Clone
-Cloning is similar to forking, but the main difference is that cloning does not create a new project, it just copy the files instead. 
+Cloning is similar to forking, but the main difference is that cloning does not create a new project, it just copy the files instead.
+
 Clone your repository using the url provided in the "Clone or Download"  button.
-Remember to clone your version of the project, so you can make changes to it. 
+
+Remember to clone your version of the project, so you can make changes to it.
 Cloning someone else project can be useful if you use it for referencing, but if you plan to make any changes, fork it and clone your version of the project.
 
 ## Adding a new remote
-When you collaborate with open source project, you usually have to deal with at least two copies of the project: the one you own and the original project. 
+When you collaborate with open source project, you usually have to deal with at least two copies of the project: the one you own and the original project.
 
 To do this, you must add another 'remote'  to your local git.
-You use remotes to reference the sibling of your project, so don't forget to add https://github.com/CityOfZion/neo-sharp.git as one of your remotes! 
+You use remotes to reference the sibling of your project, so don't forget to add https://github.com/CityOfZion/neo-sharp.git as one of your remotes!
 
 Adding a remote can vary depending on the tool you are using, but they all only require two inputs: the URL of the remote, and how do you want to call it in your machine. Usually 'origin' is used for the project original remote.
 
 In this example, we have 3 remotes: CoZ, origin and shargon. They are related repositories, but are not the same.
 
 ## Branchs
-Branchs are variation of the code in the same repository. In NEO-Sharp we work with two branchs: the master branch, and the development branch. 
+Branchs are variation of the code in the same repository. In NEO-Sharp we work with two branchs, the master branch, and the development branch.
 
-This is useful because you can have one branch for the production code (usually 'master'), and another for the the development version (usually 'development'). 
+This is useful because you can have one branch for the production code (usually 'master'), and another for the the development version (usually 'development').
 
 When you propose changes, you should always propose  changes to the development branch. This is done using a pull request.
 
@@ -54,7 +71,7 @@ When you commit some code, you are only creating a snapshot. To update the code 
 ## Pull and Rebase
 If you are working in a project with other developers, like NEO-Sharp, it's necessary to have your code updated whenever someone else changes the code (usually by merging a pull request).
 
-You can update your code using  Pull or Rebase, the main difference is "where do you want to put the changes that you just received". 
+You can update your code using  Pull or Rebase, the main difference is "where do you want to put the changes that you just received".
 When you use Pull, you are adding the changes into your latest commit, and Rebase when you want to add these changes before your first commit (that is why the 'Rebase' in the name)
 
 You must use Rebase instead of Pull because you want to make your changes 'derive'  from latest version of the original project.
@@ -63,27 +80,10 @@ Using rebase changes the history of your branch, because you are litteraly chang
 Pull and Rebase can be tricky, so extra research on this subject might be required.
 
 ## Pull Request
-A Pull Request is used whenever you want to send your changes to the original project. 
+A Pull Request is used whenever you want to send your changes to the original project.
 
 To create a pull request, go to your GitHub project page,  open the Pull Request tab and click "New Pull Request Button".
 
 In the next screen, select the Development branch in NEO-Sharp, and in the right, the branch you added your changes.
 
-If you get a message saying that this branch cannot be merged, remember to rebase your repository.
-
-## How to use Git to collaborate with NEO-Sharp
-- Fork the project 
-- Clone the forked project in your machine
-- Add a new remote using the oficial project URL
-- Create a new branch in your repository using the name of the feature you want to implement, for example:
-feature/open-wallet 
-	- It's a good practice to create a branch for every new feature you want to add, instead of working in a single branch
-- Make the desired changes and commit it
-	- Remember, [unit testing](unit_test) is highly enforced in this project, so avoid sending any pull request without proper unit testing.
-- Rebase your repository using the official project remote
-- Push your changes to your repository (a force push might be required)
-- Open GitHub website, click PullRequests and Create  Pull Request
-- Select the Development branch from the official project (in the left), and your feature branch in the right and click "Create Pull Request".
-- Follow the discussions on your pull request and perform changes required by the team. The required changes can vary from very simple changes, to more complex ones. 
-
-Every time you push changes to the branch you want to merge, the pull request will be automatically updated.
+If you get a message saying that this branch cannot be merged, it's probably because you forgot to [rebase](#rebase) your project.
