@@ -22,4 +22,4 @@ In neo-sharp, the dependencies are inserted in the constructor of an object, and
 
 For more information about DI, please refer to [wiki](https://en.wikipedia.org/wiki/Dependency_injection).
 
-### Neo-sharp Dependency Injection
+### NEO-Sharp Dependency Injection
