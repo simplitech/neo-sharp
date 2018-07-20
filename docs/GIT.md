@@ -60,7 +60,6 @@ When you propose changes, you should always propose  changes to the development 
 
 Changing the version of your code (to another branch) is called Checkout.
 
-For more information about good practices using git, refer to https://danielkummer.github.io/git-flow-cheatsheet/
 
 ## Commit
 After the project and branchs are setup, you can make changes to it. When you are done and want to persist the changes you made, you commit your code. Creating a commit can be understood as taking a snapshot of the current code. You can return to this commit later if you need to. https://developer.github.com/v3/git/commits/
