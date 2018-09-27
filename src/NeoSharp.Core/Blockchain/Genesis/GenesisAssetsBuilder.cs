@@ -23,14 +23,17 @@ namespace NeoSharp.Core.Blockchain.Genesis
 
         private readonly NetworkConfig _networkConfig;
 
+        private IContractFactory _contractFactory;
+
         private RegisterTransaction _governingTokenRegisterTransaction;
         private RegisterTransaction _utilityTokenRegisterTransaction;
         #endregion
 
         #region Constructor 
-        public GenesisAssetsBuilder(ISigner<Transaction> transactionSigner) 
+        public GenesisAssetsBuilder(ISigner<Transaction> transactionSigner, IContractFactory contractFactory) 
         {
             this._transactionSigner = transactionSigner;
+            this._contractFactory = contractFactory;
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -140,7 +143,7 @@ namespace NeoSharp.Core.Blockchain.Genesis
         public UInt160 BuildGenesisNextConsensusAddress()
         {
             var genesisValidators = this.GenesisStandByValidators();
-            return ContractFactory.CreateMultiplePublicKeyRedeemContract(genesisValidators.Length - (genesisValidators.Length - 1) / 3, genesisValidators).Code.ScriptHash;
+            return _contractFactory.CreateMultiplePublicKeyRedeemContract(genesisValidators.Length - (genesisValidators.Length - 1) / 3, genesisValidators).Code.ScriptHash;
         }
         #endregion
 
@@ -167,7 +170,7 @@ namespace NeoSharp.Core.Blockchain.Genesis
         private Contract GenesisValidatorsContract()
         {
             var genesisValidators = this.GenesisStandByValidators();
-            var genesisContract = ContractFactory.CreateMultiplePublicKeyRedeemContract(genesisValidators.Length / 2 + 1, genesisValidators);
+            var genesisContract = _contractFactory.CreateMultiplePublicKeyRedeemContract(genesisValidators.Length / 2 + 1, genesisValidators);
             return genesisContract;
         }
         #endregion

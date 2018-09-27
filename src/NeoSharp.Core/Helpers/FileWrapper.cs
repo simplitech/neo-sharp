@@ -12,7 +12,7 @@ namespace NeoSharp.Core.Wallet.Wrappers
                 throw new ArgumentException(nameof(fileName));
             }
 
-            FileInfo file = new FileInfo(fileName);
+            var file = new FileInfo(fileName);
 
             return file.Exists;
         }
@@ -24,13 +24,24 @@ namespace NeoSharp.Core.Wallet.Wrappers
                 throw new ArgumentException("File not found");
             }
             
-            string textFromFile = File.ReadAllText(fileName);
+            var textFromFile = File.ReadAllText(fileName);
             return textFromFile;
+        }
+
+        public byte[] LoadBytes(string fileName)
+        {
+            if (!Exists(fileName))
+            {
+                throw new ArgumentException("File not found");
+            }
+
+            var bytesFromFile = File.ReadAllBytes(fileName);
+            return bytesFromFile;
         }
 
         public void WriteToFile(string content, string fileName)
         {
-            FileInfo file = new FileInfo(fileName);
+            var file = new FileInfo(fileName);
             File.WriteAllText(file.FullName, content);
         }
     }

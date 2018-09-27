@@ -21,6 +21,8 @@ namespace NeoSharp.Core.Wallet.NEP6
         private readonly WalletHelper _walletHelper;
         private readonly IFileWrapper _fileWrapper;
         private readonly IJsonConverter _jsonConverter;
+        private readonly IContractFactory _contractFactory;
+
         /// <summary>
         /// Nep2Key to (publicKey, privateKey)
         /// </summary>
@@ -29,11 +31,12 @@ namespace NeoSharp.Core.Wallet.NEP6
         private string _openWalletFilename;
         public IWallet Wallet { get; private set; }
 
-        public Nep6WalletManager(IFileWrapper fileWrapper, IJsonConverter jsonConverter)
+        public Nep6WalletManager(IFileWrapper fileWrapper, IJsonConverter jsonConverter, IContractFactory contractFactory)
         {
-            _walletHelper = new WalletHelper();
+            _walletHelper = new WalletHelper(contractFactory);
             _fileWrapper = fileWrapper;
             _jsonConverter = jsonConverter;
+            _contractFactory = contractFactory;
         }
 
 
@@ -444,7 +447,7 @@ namespace NeoSharp.Core.Wallet.NEP6
         {
             var publicKeyInBytes = Crypto.Default.ComputePublicKey(privateKey, true);
             var publicKeyInEcPoint = new ECPoint(publicKeyInBytes);
-            var contract = ContractFactory.CreateSinglePublicKeyRedeemContract(publicKeyInEcPoint);
+            var contract = _contractFactory.CreateSinglePublicKeyRedeemContract(publicKeyInEcPoint);
 
             var account = new NEP6Account(contract)
             {

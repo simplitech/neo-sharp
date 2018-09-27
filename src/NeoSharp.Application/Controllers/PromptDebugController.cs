@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Microsoft.Extensions.Logging;
 using NeoSharp.Application.Attributes;
 using NeoSharp.Application.Client;
-using NeoSharp.Application.Exceptions;
+using NeoSharp.Core.Cryptography;
+using NeoSharp.Core.Extensions;
 using NeoSharp.Core.Logging;
 using NeoSharp.Core.Models;
-using NeoSharp.Cryptography;
-using NeoSharp.Types;
-using NeoSharp.Types.ExtensionMethods;
+using NeoSharp.Core.SmartContract.Debugging;
+using NeoSharp.Core.SmartContract.Invocation;
+using NeoSharp.Core.Types;
 using NeoSharp.VM;
 using NeoSharp.VM.Types;
 
@@ -21,48 +21,40 @@ namespace NeoSharp.Application.Controllers
         #region Private fields
 
         private readonly ILogBag _logs;
-        private readonly Core.Logging.ILogger<Prompt> _logger;
+        private readonly ILogger<Prompt> _logger;
         private readonly ILoggerFactoryExtended _log;
 
         private readonly IVMFactory _vmFactory;
         private readonly IConsoleHandler _consoleHandler;
+        private readonly IDebugContext _debugContext;
+        private readonly IInvocationProcess _invocationProcess;
+        private LogVerbose _logVerbose = LogVerbose.Off;
 
         #endregion
 
-        [Flags]
-        public enum LogVerbose : byte
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logBag">Log bag</param>
+        /// <param name="logger">Logger</param>
+        /// <param name="log">Log</param>
+        /// <param name="vmFactory">VM Factory</param>
+        /// <param name="consoleHandler">Console handler</param>
+        public PromptDebugController
+            (
+            ILogBag logBag,
+            ILogger<Prompt> logger, ILoggerFactoryExtended log,
+            IVMFactory vmFactory, IConsoleHandler consoleHandler,
+            IDebugContext debugContext, IInvocationProcess invocationProcess
+            )
         {
-            Off = 0,
-
-            Trace = 1,
-            Debug = 2,
-            Information = 4,
-            Warning = 8,
-            Error = 16,
-            Critical = 32,
-
-            All = Trace | Debug | Information | Warning | Error | Critical
-        }
-
-        private readonly Dictionary<LogLevel, LogVerbose> _logFlagProxy = new Dictionary<LogLevel, LogVerbose>()
-        {
-            { LogLevel.Trace, LogVerbose.Trace},
-            { LogLevel.Debug, LogVerbose.Debug},
-            { LogLevel.Information, LogVerbose.Information},
-            { LogLevel.Warning, LogVerbose.Warning},
-            { LogLevel.Error, LogVerbose.Error},
-            { LogLevel.Critical, LogVerbose.Critical},
-        };
-        private LogVerbose _logVerbose = LogVerbose.Off;
-
-        private void Log_OnLog(LogEntry log)
-        {
-            if (!_logVerbose.HasFlag(_logFlagProxy[log.Level]))
-            {
-                return;
-            }
-
-            _logs.Add(log);
+            _logs = logBag;
+            _log = log;
+            _logger = logger;
+            _vmFactory = vmFactory;
+            _consoleHandler = consoleHandler;
+            _debugContext = debugContext;
+            _invocationProcess = invocationProcess;
         }
 
         /// <summary>
@@ -90,56 +82,7 @@ namespace NeoSharp.Application.Controllers
             }
         }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="logBag">Log bag</param>
-        /// <param name="logger">Logger</param>
-        /// <param name="log">Log</param>
-        /// <param name="vmFactory">VM Factory</param>
-        /// <param name="consoleHandler">Console handler</param>
-        public PromptDebugController
-            (
-            ILogBag logBag,
-            Core.Logging.ILogger<Prompt> logger, ILoggerFactoryExtended log,
-            IVMFactory vmFactory, IConsoleHandler consoleHandler
-            )
-        {
-            _logs = logBag;
-            _log = log;
-            _logger = logger;
-            _vmFactory = vmFactory;
-            _consoleHandler = consoleHandler;
-        }
 
-        class DebugScriptTable : IScriptTable
-        {
-            public readonly Dictionary<UInt160, byte[]> VirtualContracts = new Dictionary<UInt160, byte[]>();
-
-            /// <summary>
-            /// Get script table
-            /// </summary>
-            /// <param name="scriptHash">Script hash</param>
-            /// <param name="isDynamicInvoke">Is dynamic invoke</param>
-            /// <returns>return smart contract</returns>
-            public byte[] GetScript(byte[] scriptHash, bool isDynamicInvoke)
-            {
-                var hash = new UInt160(scriptHash);
-
-                if (VirtualContracts.TryGetValue(hash, out var script))
-                {
-                    return script;
-                }
-
-                Contract contract = Contract.GetContract(hash);
-
-                if (contract == null /* TODO #400: || (isDynamicInvoke && !contract.AllowDynamicInvokes) */) return null;
-
-                return contract.Script;
-            }
-        }
-
-        DebugScriptTable _scriptTable = new DebugScriptTable();
 
         // TODO #401: Implement test invoke with asset attachment
         // testinvoke {contract hash} {params} (--attach-neo={amount}, --attach-gas={amount}) (--from-addr={addr})
@@ -151,13 +94,11 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("virtual contract add", Help = "Add virtual contract to the script table", Category = "Debug")]
         public void VirtualContractAddCommand(byte[] script)
         {
-            var hash = new UInt160(Crypto.Default.Hash160(script));
+            _debugContext.TryAddVirtualContract(script, out UInt160 contractHash);
 
-            _scriptTable.VirtualContracts.TryAdd(hash, script);
-
-            foreach (var h in _scriptTable.VirtualContracts.Keys)
+            foreach (var h in _debugContext.ListVirtualContracts())
             {
-                _consoleHandler.WriteLine(h.ToString(true), h == hash ? ConsoleOutputStyle.Information : ConsoleOutputStyle.Output);
+                _consoleHandler.WriteLine(h.ToString(true), h == contractHash ? ConsoleOutputStyle.Information : ConsoleOutputStyle.Output);
             }
         }
 
@@ -168,7 +109,7 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("virtual contract add", Help = "Add virtual contract to the script table", Category = "Debug")]
         public void VirtualContractAddCommand(FileInfo file)
         {
-            if (!file.Exists) throw new InvalidParameterException("File must exists");
+            if (!file.Exists) throw new ArgumentException("File must exists");
 
             VirtualContractAddCommand(File.ReadAllBytes(file.FullName));
         }
@@ -179,7 +120,7 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("virtual contract clear", Help = "Clear all virtual smart contracts from the script table", Category = "Debug")]
         public void VirtualContractClearCommand()
         {
-            _scriptTable.VirtualContracts.Clear();
+            _debugContext.ClearVirtualContracts();
         }
 
         /// <summary>
@@ -188,7 +129,7 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("virtual contract list", Help = "List all virtual smart contracts on the script table", Category = "Debug")]
         public void VirtualContractListCommand()
         {
-            foreach (var h in _scriptTable.VirtualContracts.Keys)
+            foreach (var h in _debugContext.ListVirtualContracts())
             {
                 _consoleHandler.WriteLine(h.ToString(true));
             }
@@ -201,7 +142,7 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("decompile", Help = "Decompile contract", Category = "Debug")]
         public void DecompileCommand(UInt160 contractHash)
         {
-            var script = _scriptTable.GetScript(contractHash.ToArray(), false);
+            var script = _debugContext.GetScript(contractHash.ToArray(), false);
 
             if (script == null) throw (new ArgumentNullException("Contract not found"));
 
@@ -232,42 +173,29 @@ namespace NeoSharp.Application.Controllers
         [PromptCommand("testinvoke", Help = "Test invoke contract", Category = "Debug")]
         public void TestInvoke(UInt160 contractHash, ETriggerType trigger, string operation, [PromptCommandParameterBody] object[] parameters = null)
         {
-            if (_scriptTable.GetScript(contractHash.ToArray(), false) == null) throw (new ArgumentNullException("Contract not found"));
 
-            var args = new ExecutionEngineArgs()
+            if(_debugContext.ContainsScript(contractHash))
             {
-                ScriptTable = _scriptTable,
-                Logger = new ExecutionEngineLogger(ELogVerbosity.StepInto),
-                Trigger = trigger
-            };
-
-            var log = new StringBuilder();
-
-            args.Logger.OnStepInto += (context) =>
-            {
-                log.AppendLine(context.NextInstruction.ToString());
-            };
-
-            using (var script = new ScriptBuilder())
-            using (var vm = _vmFactory.Create(args))
-            {
-                script.EmitMainPush(operation, parameters);
-                script.EmitAppCall(contractHash.ToArray(), false);
-
-                vm.LoadScript(script);
-
-                var ret = vm.Execute();
-                var result = new
-                {
-                    vm.State,
-                    Result = vm.ResultStack,
-                    vm.ConsumedGas
-                };
-
-                _consoleHandler.WriteObject(result, PromptOutputStyle.json);
+                throw new ArgumentNullException("Contract not found");
             }
 
+
+            //IInvocationResult invocationResult = _invocationProcess.TestInvoke();
+
+
+            //_consoleHandler.WriteObject(invocationResult, PromptOutputStyle.json);
+
             //_logger.LogDebug("Execution opcodes:" + Environment.NewLine + log.ToString());
+        }
+
+        private void Log_OnLog(LogEntry log)
+        {
+            if (!_logVerbose.HasFlag(LogFlagProxy.Instance[log.Level]))
+            {
+                return;
+            }
+
+            _logs.Add(log);
         }
     }
 }

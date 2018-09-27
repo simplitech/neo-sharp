@@ -12,6 +12,13 @@ namespace NeoSharp.Core.Wallet.Wrappers
         string Load(string fileName);
 
         /// <summary>
+        /// Load the specified file into a byte array.
+        /// </summary>
+        /// <returns>The file content in a byte array</returns>
+        /// <param name="fileName">File name.</param>
+        byte[] LoadBytes(string fileName);
+
+        /// <summary>
         /// Check if the file exists
         /// </summary>
         /// <returns>Exists</returns>

@@ -17,13 +17,13 @@ namespace NeoSharp.Core.SmartContract.ContractParameters
 
         public override void PushIntoScriptBuilder(ScriptBuilder scriptBuilder)
         {
-            if (this.Value is BigInteger bi)
+            if (Value is BigInteger bi)
             {
                 scriptBuilder.EmitPush(bi);
             }
             else
             {
-                if (BigInteger.TryParse(this.Value.ToString(), out var bip))
+                if (BigInteger.TryParse(Value.ToString(), out var bip))
                 {
                     scriptBuilder.EmitPush(bip);
                 }

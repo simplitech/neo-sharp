@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NeoSharp.Core.Blockchain.Repositories;
 using NeoSharp.Core.Cryptography;
 using NeoSharp.Core.Models;
 using NeoSharp.Core.SmartContract;
@@ -22,6 +23,7 @@ namespace NeoSharp.Core.Wallet.Test
     {
         SecureString _defaultPassword;
         Contract _testContract;
+        IContractFactory _contractFactory;
 
         [TestInitialize]
         public void Init()
@@ -41,7 +43,8 @@ namespace NeoSharp.Core.Wallet.Test
             var privateKey = Crypto.Default.GenerateRandomBytes(32);
             var publicKey = Crypto.Default.ComputePublicKey(privateKey, true);
             var publicKeyInEcPoint = new ECPoint(publicKey);
-            _testContract = ContractFactory.CreateSinglePublicKeyRedeemContract(publicKeyInEcPoint);
+            _contractFactory = new ContractFactory(null);
+            _testContract = _contractFactory.CreateSinglePublicKeyRedeemContract(publicKeyInEcPoint);
         }
 
         #region Save Wallet
@@ -218,7 +221,7 @@ namespace NeoSharp.Core.Wallet.Test
             byte[] privateKey = GetPrivateKeyFromWIF("KxLNhtdXXqaYUW1DKBc1XYQLxhouxXPLgQhR8kk7SYG3ajjR8M8a");
             ECPoint publicKey = new ECPoint(Crypto.Default.ComputePublicKey(privateKey, true));
 
-            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper());
+            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper(), _contractFactory);
             IWalletAccount walletAccount2 = mockWalletManager.GetAccount(publicKey);
         }
 
@@ -284,7 +287,7 @@ namespace NeoSharp.Core.Wallet.Test
 
             Assert.IsTrue(mockWalletManager.Wallet.Accounts.ToList().Count == 1);
 
-            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper());
+            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper(), _contractFactory);
             mockWalletManager.DeleteAccount(walletAccount.Contract.ScriptHash);
         }
 
@@ -350,7 +353,7 @@ namespace NeoSharp.Core.Wallet.Test
             // Act
             NEP6Account walletAccount1 = (NEP6Account)mockWalletManager.CreateAndAddAccount(_defaultPassword);
 
-            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper());
+            mockWalletManager = new Nep6WalletManager(new FileWrapper(), new JsonConverterWrapper(), _contractFactory);
             NEP6Account walletAccount2 = (NEP6Account)mockWalletManager.ImportScriptHash(walletAccount1.ScriptHash);
         }
 
@@ -575,6 +578,7 @@ namespace NeoSharp.Core.Wallet.Test
         {
             AutoMockContainer.Register<IFileWrapper>(new FileWrapper());
             AutoMockContainer.Register<IJsonConverter>(new JsonConverterWrapper());
+            AutoMockContainer.Register<IContractFactory>(new ContractFactory(null));
             return AutoMockContainer.Create<Nep6WalletManager>();
         }
 

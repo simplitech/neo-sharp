@@ -13,6 +13,13 @@ namespace NeoSharp.Core.Wallet.Helpers
 {
     public class WalletHelper
     {
+        private IContractFactory _contractFactory;
+
+        public WalletHelper(IContractFactory contractFactory)
+        {
+            _contractFactory = contractFactory;
+        }
+
         /// <summary>
         /// Decrypts a NEP-2 into a private key.
         /// https://github.com/neo-project/proposals/blob/master/nep-2.mediawiki#decryption-steps
@@ -161,7 +168,7 @@ namespace NeoSharp.Core.Wallet.Helpers
         /// <param name="publicKey">Public key.</param>
         public UInt160 ScriptHashFromPublicKey(ECPoint publicKey)
         {
-            return ContractFactory.CreateSinglePublicKeyRedeemContract(publicKey).ScriptHash;
+            return _contractFactory.CreateSinglePublicKeyRedeemContract(publicKey).ScriptHash;
         }
 
         /// <summary>
@@ -215,7 +222,7 @@ namespace NeoSharp.Core.Wallet.Helpers
         {
             var pubKeyInBytes = Crypto.Default.ComputePublicKey(privateKey, true);
             var pubkey = new ECPoint(pubKeyInBytes);
-            var accountContract = ContractFactory.CreateSinglePublicKeyRedeemContract(pubkey);
+            var accountContract = _contractFactory.CreateSinglePublicKeyRedeemContract(pubkey);
             return accountContract.ScriptHash.ToAddress();
         }
 

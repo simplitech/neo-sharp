@@ -8,7 +8,7 @@ namespace NeoSharp.Core.SmartContract.ContractParameters
 
         public override void PushIntoScriptBuilder(ScriptBuilder scriptBuilder)
         {
-            scriptBuilder.EmitPush((byte[])this.Value);
+            scriptBuilder.EmitPush((byte[])Value);
         }
     }
 }

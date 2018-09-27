@@ -42,15 +42,6 @@ namespace NeoSharp.Core.Models
         [JsonProperty("description")]
         public string Description;
 
-        /// <summary>
-        /// Get Contract from hash
-        /// </summary>
-        /// <param name="contractHash">Contract hash</param>
-        /// <returns>Return contract</returns>
-        public static Contract GetContract(UInt160 contractHash)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Invoke contract

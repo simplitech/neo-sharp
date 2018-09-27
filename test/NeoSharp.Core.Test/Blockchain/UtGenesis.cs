@@ -5,6 +5,7 @@ using NeoSharp.Core.Blockchain.Genesis;
 using NeoSharp.Core.Blockchain.Repositories;
 using NeoSharp.Core.Models;
 using NeoSharp.Core.Models.OperationManger;
+using NeoSharp.Core.SmartContract;
 using NeoSharp.Core.Types;
 using NeoSharp.Cryptography;
 using NeoSharp.TestHelpers;
@@ -24,6 +25,7 @@ namespace NeoSharp.Core.Test.Blockchain
             var witnessOperationManager = new WitnessOperationsManager(crypto);
             var transactionOperationManager = new TransactionOperationManager(crypto, binarySerialier, witnessOperationManager, new Mock<ITransactionRepository>().Object, new Mock<IAssetRepository>().Object, new TransactionContext());
             var blockOperationManager = new BlockOperationManager(crypto, binarySerialier, transactionOperationManager, witnessOperationManager, new Mock<IBlockRepository>().Object);
+            var contractFactory = new ContractFactory(null);
 
             this.AutoMockContainer.Register(crypto);
             this.AutoMockContainer.Register(binarySerialier);
@@ -31,6 +33,7 @@ namespace NeoSharp.Core.Test.Blockchain
             this.AutoMockContainer.Register<ITransactionOperationsManager>(transactionOperationManager);
             this.AutoMockContainer.Register<ISigner<Block>>(blockOperationManager);
             this.AutoMockContainer.Register<ISigner<Transaction>>(transactionOperationManager);
+            this.AutoMockContainer.Register<IContractFactory>(contractFactory);
 
             var genesisAssets = this.AutoMockContainer.Create<GenesisAssetsBuilder>();
             this.AutoMockContainer.Register<IGenesisAssetsBuilder>(genesisAssets);

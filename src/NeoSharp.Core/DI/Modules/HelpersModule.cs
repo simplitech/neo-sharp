@@ -1,6 +1,7 @@
-﻿using NeoSharp.Core.Helpers;
+﻿using NeoSharp.Core.Cryptography;
+using NeoSharp.Core.Helpers;
+using NeoSharp.Core.SmartContract;
 using NeoSharp.Core.Wallet.Wrappers;
-using NeoSharp.Cryptography;
 
 namespace NeoSharp.Core.DI.Modules
 {
@@ -12,6 +13,7 @@ namespace NeoSharp.Core.DI.Modules
             containerBuilder.RegisterSingleton<Crypto, BouncyCastleCrypto>();
             containerBuilder.RegisterSingleton<IFileWrapper, FileWrapper>();
             containerBuilder.RegisterSingleton<IJsonConverter, JsonConverterWrapper>();
+            containerBuilder.RegisterSingleton<IContractFactory, ContractFactory>();
 
             containerBuilder.OnBuild += c =>
             {
