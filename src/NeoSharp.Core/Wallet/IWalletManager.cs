@@ -1,5 +1,7 @@
 ﻿using System.Security;
 using NeoSharp.Core.Cryptography;
+using NeoSharp.Core.Wallet.NEP5;
+using NeoSharp.Core.Wallet.NEP6;
 using NeoSharp.Types;
 
 namespace NeoSharp.Core.Wallet
@@ -109,6 +111,13 @@ namespace NeoSharp.Core.Wallet
         /// <param name="nep2">Nep2.</param>
         /// <param name="password">Password.</param>
         IWalletAccount ImportEncryptedWif(string nep2, SecureString password);
+
+        /// <summary>
+        /// Import the account using smartcontract scripthash
+        /// </summary>
+        /// <returns>The account.</returns>
+        /// <param name="scriptHash">Script hash.</param>
+        NEP5Account ImportToken(UInt160 scriptHash);
 
         /// <summary>
         /// Saves the current wallet into the HD

@@ -25,7 +25,7 @@ namespace NeoSharp.Core.Test.Blockchain
             var witnessOperationManager = new WitnessOperationsManager(crypto);
             var transactionOperationManager = new TransactionOperationManager(crypto, binarySerialier, witnessOperationManager, new Mock<ITransactionRepository>().Object, new Mock<IAssetRepository>().Object, new TransactionContext());
             var blockOperationManager = new BlockOperationManager(crypto, binarySerialier, transactionOperationManager, witnessOperationManager, new Mock<IBlockRepository>().Object);
-            var contractFactory = new ContractFactory(null);
+            var contractFactory = new ContractFactory();
 
             this.AutoMockContainer.Register(crypto);
             this.AutoMockContainer.Register(binarySerialier);

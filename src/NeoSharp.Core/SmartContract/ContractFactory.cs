@@ -4,18 +4,24 @@ using NeoSharp.Core.Models;
 using NeoSharp.VM;
 using NeoSharp.Core.Extensions;
 using NeoSharp.Core.Cryptography;
+using NeoSharp.Types;
 using NeoSharp.Types.ExtensionMethods;
 
 namespace NeoSharp.Core.SmartContract
 {
-    public class ContractFactory
+    public class ContractFactory : IContractFactory
     {
+        public Contract LoadSmartContract(UInt160 contractScriptHash)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Creates the single public key redeem contract ('regular account')
         /// </summary>
         /// <returns>The single public key redeem contract.</returns>
         /// <param name="publicKey">Public key.</param>
-        public static Contract CreateSinglePublicKeyRedeemContract(ECPoint publicKey)
+        public Contract CreateSinglePublicKeyRedeemContract(ECPoint publicKey)
         {
             string contractHexCode;
             using (ScriptBuilder sb = new ScriptBuilder())
@@ -49,7 +55,7 @@ namespace NeoSharp.Core.SmartContract
         /// <returns>The multiple public key redeem contract.</returns>
         /// <param name="numberOfRequiredPublicKeys">Number of required public keys.</param>
         /// <param name="publicKeys">Public keys.</param>
-        public static Contract CreateMultiplePublicKeyRedeemContract(int numberOfRequiredPublicKeys, ECPoint[] publicKeys)
+        public Contract CreateMultiplePublicKeyRedeemContract(int numberOfRequiredPublicKeys, ECPoint[] publicKeys)
         {
             if (!((1 <= numberOfRequiredPublicKeys) 
                   && (numberOfRequiredPublicKeys <= publicKeys.Length) 

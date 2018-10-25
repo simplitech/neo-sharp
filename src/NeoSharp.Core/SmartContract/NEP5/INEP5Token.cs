@@ -2,6 +2,7 @@
 using System.Numerics;
 using NeoSharp.Core.Models;
 using NeoSharp.Core.Types;
+using NeoSharp.Types;
 
 namespace NeoSharp.Core.SmartContract.NEP5
 {

@@ -65,18 +65,24 @@ namespace NeoSharp.Application.Controllers
             _walletManager.Close();
         }
 
-        [PromptCommand("import wif", Category = "Wallet", Help = "Close wallet")]
+        [PromptCommand("import wif", Category = "Wallet", Help = "Import WIF")]
         public void ImportWif(string wif)
         {
             var secureString = _consoleHandler.ReadPassword();
             _walletManager.ImportWif(wif, secureString);
         }
 
-        [PromptCommand("import nep2", Category = "Wallet", Help = "Close wallet")]
+        [PromptCommand("import nep2", Category = "Wallet", Help = "Import NEP2")]
         public void ImportNep2(string nep2key)
         {
             var secureString = _consoleHandler.ReadPassword();
             _walletManager.ImportEncryptedWif(nep2key, secureString);
+        }
+
+        [PromptCommand("import token", Category = "Wallet", Help = "Import Token")]
+        public void ImportToken(string scriptHash)
+        {
+            _walletManager.ImportToken(scriptHash.ToScriptHash());
         }
 
         [PromptCommand("wallet list", Category = "Wallet", Help = "List all accounts from wallet")]

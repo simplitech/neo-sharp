@@ -11,6 +11,8 @@ using NeoSharp.Core.Models;
 using NeoSharp.Core.SmartContract.Debugging;
 using NeoSharp.Core.SmartContract.Invocation;
 using NeoSharp.Core.Types;
+using NeoSharp.Types;
+using NeoSharp.Types.ExtensionMethods;
 using NeoSharp.VM;
 using NeoSharp.VM.Types;
 

@@ -5,6 +5,7 @@ using NeoSharp.Core.Models;
 using NeoSharp.Core.SmartContract.ContractParameters;
 using NeoSharp.Core.SmartContract.Invocation;
 using NeoSharp.Core.Types;
+using NeoSharp.Types;
 
 namespace NeoSharp.Core.SmartContract.NEP5
 {

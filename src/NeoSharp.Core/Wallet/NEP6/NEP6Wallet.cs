@@ -20,7 +20,7 @@ namespace NeoSharp.Core.Wallet.NEP6
         public IWalletAccount[] Accounts { get; set; }
 
         [JsonProperty("extra")]
-        public JObject Extra { get; set; }
+        public JToken Extra { get; set; }
 
         /// <summary>
         /// Constructor

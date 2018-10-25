@@ -6,6 +6,7 @@ using NeoSharp.Core.Models;
 using NeoSharp.Core.SmartContract.Invocation;
 using NeoSharp.Core.Types;
 using NeoSharp.Core.Wallet.Wrappers;
+using NeoSharp.Types;
 
 namespace NeoSharp.Application.Controllers
 {

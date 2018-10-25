@@ -43,7 +43,7 @@ namespace NeoSharp.Core.Wallet.Test
             var privateKey = Crypto.Default.GenerateRandomBytes(32);
             var publicKey = Crypto.Default.ComputePublicKey(privateKey, true);
             var publicKeyInEcPoint = new ECPoint(publicKey);
-            _contractFactory = new ContractFactory(null);
+            _contractFactory = new ContractFactory();
             _testContract = _contractFactory.CreateSinglePublicKeyRedeemContract(publicKeyInEcPoint);
         }
 
@@ -578,7 +578,7 @@ namespace NeoSharp.Core.Wallet.Test
         {
             AutoMockContainer.Register<IFileWrapper>(new FileWrapper());
             AutoMockContainer.Register<IJsonConverter>(new JsonConverterWrapper());
-            AutoMockContainer.Register<IContractFactory>(new ContractFactory(null));
+            AutoMockContainer.Register<IContractFactory>(new ContractFactory());
             return AutoMockContainer.Create<Nep6WalletManager>();
         }
 

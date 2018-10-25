@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
@@ -21,19 +19,16 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.5.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NeoSharp.BinarySerialization\NeoSharp.BinarySerialization.csproj" />
     <ProjectReference Include="..\NeoSharp.Cryptography\NeoSharp.Cryptography.csproj" />
     <ProjectReference Include="..\NeoSharp.Types\NeoSharp.Types.csproj" />
     <ProjectReference Include="..\NeoSharp.VM\NeoSharp.VM.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Wallet\Helpers\" />
     <Folder Include="Wallet\TransactionManager\" />
     <Folder Include="SmartContract\ContractParameters\" />
-    <Folder Include="Wallet\Invocation\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +37,7 @@
   <ItemGroup>
     <None Include="..\..\ca.ruleset" Link="ca.ruleset" />
   </ItemGroup>
-	<PropertyGroup>
-		<CodeAnalysisRuleSet>ca.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>ca.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

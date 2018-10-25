@@ -2,6 +2,7 @@
 using NeoSharp.Core.Helpers;
 using NeoSharp.Core.SmartContract;
 using NeoSharp.Core.Wallet.Wrappers;
+using NeoSharp.Cryptography;
 
 namespace NeoSharp.Core.DI.Modules
 {

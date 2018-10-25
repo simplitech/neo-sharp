@@ -7,11 +7,15 @@ using NeoSharp.Core.Cryptography;
 using NeoSharp.Core.Extensions;
 using NeoSharp.Core.Models;
 using NeoSharp.Core.SmartContract;
+using NeoSharp.Core.SmartContract.Invocation;
 using NeoSharp.Core.Wallet.Exceptions;
 using NeoSharp.Core.Wallet.Helpers;
+using NeoSharp.Core.Wallet.NEP5;
 using NeoSharp.Core.Wallet.Wrappers;
 using NeoSharp.Cryptography;
 using NeoSharp.Types;
+using NeoSharp.VM;
+using Newtonsoft.Json.Linq;
 
 
 namespace NeoSharp.Core.Wallet.NEP6
@@ -22,6 +26,8 @@ namespace NeoSharp.Core.Wallet.NEP6
         private readonly IFileWrapper _fileWrapper;
         private readonly IJsonConverter _jsonConverter;
         private readonly IContractFactory _contractFactory;
+        private readonly IInvocationProcess _invocationProcess;
+        private readonly IScriptTable _scriptTable;
 
         /// <summary>
         /// Nep2Key to (publicKey, privateKey)
@@ -31,12 +37,14 @@ namespace NeoSharp.Core.Wallet.NEP6
         private string _openWalletFilename;
         public IWallet Wallet { get; private set; }
 
-        public Nep6WalletManager(IFileWrapper fileWrapper, IJsonConverter jsonConverter, IContractFactory contractFactory)
+        public Nep6WalletManager(IFileWrapper fileWrapper, IJsonConverter jsonConverter, IContractFactory contractFactory, IInvocationProcess invocationProcess, IScriptTable scriptTable)
         {
             _walletHelper = new WalletHelper(contractFactory);
             _fileWrapper = fileWrapper;
             _jsonConverter = jsonConverter;
             _contractFactory = contractFactory;
+            _invocationProcess = invocationProcess;
+            _scriptTable = scriptTable;
         }
 
 
@@ -243,6 +251,35 @@ namespace NeoSharp.Core.Wallet.NEP6
             account.Key = nep2;
             AddAccount(account);
             return account;
+        }
+
+        public NEP5Account ImportToken(UInt160 scriptHash)
+        {
+            CheckWalletIsOpen();
+
+            var nameRes = _invocationProcess.Invoke(scriptHash, "name", new object[] { }, _scriptTable, ETriggerType.Application);
+            nameRes.ResultStack.TryPeek(1, out var nameStackItem);
+            var name = nameStackItem.ToString();
+            
+            var symbolRes = _invocationProcess.Invoke(scriptHash, "symbol", new object[] { }, _scriptTable, ETriggerType.Application);
+            symbolRes.ResultStack.TryPeek(1, out var symbolStackItem);
+            var symbol = symbolStackItem.ToString();
+
+            var newAccount = new NEP5Account
+            {
+                ScriptHash = scriptHash,
+                Name = name,
+                Symbol = symbol.Equals("true")
+            };
+
+            if (Wallet.Extra is JArray array)
+            {
+                array.Add(newAccount);
+            }
+            
+            SaveWallet();
+
+            return newAccount;
         }
 
 

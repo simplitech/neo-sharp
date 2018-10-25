@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoSharp.Core.Types;
+using NeoSharp.Types;
 using NeoSharp.VM;
 
 namespace NeoSharp.Core.SmartContract.Debugging

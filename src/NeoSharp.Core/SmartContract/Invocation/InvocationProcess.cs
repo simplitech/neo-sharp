@@ -4,6 +4,7 @@ using NeoSharp.Core.Extensions;
 using NeoSharp.Core.SmartContract.ContractParameters;
 using NeoSharp.Core.SmartContract.Debugging;
 using NeoSharp.Core.Types;
+using NeoSharp.Types;
 using NeoSharp.VM;
 
 namespace NeoSharp.Core.SmartContract.Invocation
@@ -17,37 +18,31 @@ namespace NeoSharp.Core.SmartContract.Invocation
             _vmFactory = vmFactory;
         }
 
-
-        //public InvocationResult TestInvoke(UInt160 scriptHash, string operation, object[] parameters, IScriptTable scriptTable, ETriggerType trigger, StringBuilder logBuilder = null)
-        //{
-        //    var args = new ExecutionEngineArgs()
-        //    {
-        //        ScriptTable = scriptTable,
-        //        Logger = new ExecutionEngineLogger(ELogVerbosity.StepInto),
-        //        Trigger = trigger
-        //    };
-
-        //    args.Logger.OnStepInto += (context) =>
-        //    {
-        //        logBuilder?.AppendLine(context.NextInstruction.ToString());
-        //    };
-
-        //    using (var script = new ScriptBuilder())
-        //    using (var vm = _vmFactory.Create(args))
-        //    {
-        //        script.EmitMainPush(operation, parameters);
-        //        script.EmitAppCall(scriptHash.ToArray(), false);
-
-        //        vm.LoadScript(script);
-
-        //        var ret = vm.Execute();
-        //        return new InvocationResult(script, vm.State, vm.ConsumedGas, vm.ResultStack);
-        //    }
-        //}
-
-        public InvocationResult TestInvoke(UInt160 scriptHash, string operation, object[] parameters, IScriptTable scriptTable, ETriggerType trigger, StringBuilder logBuilder = null)
+        public InvocationResult Invoke(UInt160 scriptHash, string operation, object[] parameters, IScriptTable scriptTable, ETriggerType trigger, StringBuilder logBuilder = null)
         {
-            throw new System.NotImplementedException();
+            var args = new ExecutionEngineArgs()
+            {
+                ScriptTable = scriptTable,
+                Logger = new ExecutionEngineLogger(ELogVerbosity.StepInto),
+                Trigger = trigger
+            };
+
+            args.Logger.OnStepInto += (context) =>
+            {
+                logBuilder?.AppendLine(context.NextInstruction.ToString());
+            };
+
+            using (var script = new ScriptBuilder())
+            using (var vm = _vmFactory.Create(args))
+            {
+                script.EmitMainPush(operation, parameters);
+                script.EmitAppCall(scriptHash.ToArray(), false);
+
+                vm.LoadScript(script);
+
+                var ret = vm.Execute();
+                return new InvocationResult(script, vm.State, vm.ConsumedGas, vm.ResultStack);
+            }
         }
 
 
